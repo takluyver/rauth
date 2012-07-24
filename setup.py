@@ -4,6 +4,8 @@ import rauth
 
 from setuptools import setup, find_packages
 
+PY3 = sys.version_info[0] >= 3
+
 if sys.argv[-1] == 'test':
     nosetests = 'nosetests -v --with-coverage --cover-package=rauth'
     try:
@@ -11,9 +13,13 @@ if sys.argv[-1] == 'test':
         nosetests += ' --with-yanc'
     except ImportError:
         pass
-    os.system('pyflakes rauth tests; '
-              'pep8 rauth tests && '
-              + nosetests)
+    
+    cmd = 'pep8 rauth tests; ' + nosetests
+    if not PY3:
+        # pyflakes is not yet compatible with Python 3
+        cmd = 'pyflakes rauth tests; ' + cmd
+    
+    os.system(cmd)
     sys.exit()
 
 setup(
