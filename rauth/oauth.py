@@ -9,8 +9,11 @@ import base64
 import hmac
 
 from hashlib import sha1
-from urlparse import parse_qsl, urlsplit, urlunsplit
-from urllib import quote, urlencode
+try:
+    from urllib.parse import parse_qsl, urlsplit, urlunsplit, quote, urlencode
+except ImportError:
+    from urlparse import parse_qsl, urlsplit, urlunsplit
+    from urllib import quote, urlencode
 
 
 class SignatureMethod(object):

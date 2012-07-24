@@ -11,8 +11,12 @@ import hashlib
 
 from rauth.hook import OAuth1Hook
 
-from urllib import quote, urlencode
-from urlparse import parse_qsl, urlsplit
+try:
+    from urllib.parse import parse_qsl, urlsplit, quote, urlencode
+except ImportError:
+    from urlparse import parse_qsl, urlsplit
+    from urllib import quote, urlencode
+
 from datetime import datetime
 
 
